@@ -1,3 +1,3 @@
 class ShortUrl < ActiveRecord::Base
-	validates :long_url, presence: true # Validate presence of URL to shorten
+	validates :long_url, presence: true, uniqueness: true # Validate URL to shorten is present and unique
 end

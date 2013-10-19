@@ -1,24 +1,28 @@
 <h1>Shortened URLs</h1>
-	<% if @short_urls.any? %>
-		<table border="1" cellpadding="10">
-			<th></th>
-			<th>Shortened URL</th>
-			<th>Original URL</th>
-			<% @short_urls.each do |short_url| %>
-				<tr>
-					<% short_url_string = "#{request.protocol}#{request.host_with_port}/#{short_url.id}" %>
-					<% long_url_string = short_url.long_url %>
-					<td>
-						<%= link_to "delete", short_url, method: :delete,
-														 data: { confirm: "Are you sure?" } %>
-					</td>
-					<td><%= link_to short_url_string, short_url_string %></td>
-					<td><%= link_to long_url_string, long_url_string %></td>
-				</tr>
-			<% end %>
-		</table>
-	<% else %>
-		<p>none</p>
-	<% end %>
 
-<%= link_to "Shorten a new URL", new_short_url_path %>
+<%= button_to new_short_url_path, method: :get do %>
+	Shorten a new URL
+<% end %>
+
+<table border="1" cellpadding="10">
+	<th></th>
+	<th>Shortened URL</th>
+	<th>Original URL</th>
+	<% if @short_urls.any? %>
+		<% @short_urls.each do |short_url| %>
+			<tr>
+				<% short_url_string = url_string(short_url) %>
+				<% long_url_string = short_url.long_url %>
+				<td>
+					<%= button_to short_url, method: :delete, data: { confirm: "Are you sure?" } do %>
+						delete
+					<% end %>
+				</td>
+				<td><%= link_to short_url_string, short_url_string %></td>
+				<td><%= link_to long_url_string, long_url_string %></td>
+			</tr>
+		<% end %>
+	<% else %>
+		<tr><td></td><td>none</td><td></td></tr>
+	<% end %>
+</table>

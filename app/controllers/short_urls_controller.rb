@@ -1,4 +1,6 @@
 class ShortUrlsController < ApplicationController
+  include ShortUrlsHelper
+
   def new
   	@short_url = ShortUrl.new
   end
@@ -6,8 +8,7 @@ class ShortUrlsController < ApplicationController
   def create
   	@short_url = ShortUrl.new(long_url_param)
   	if @short_url.save
-  		short_url_string ="#{request.protocol}#{request.host_with_port}/#{@short_url.id}!"
-  		flash[:success] = "#{@short_url.long_url} shortened to #{short_url_string}!"
+  		flash[:success] = "#{@short_url.long_url} shortened to #{url_string(@short_url)}"
   		redirect_to root_url
   	else
   		render 'new'
@@ -24,9 +25,9 @@ class ShortUrlsController < ApplicationController
   end
 
   def destroy
-  	@short_url = ShortUrl.find_by(id: params[:id])
-  	if @short_url.destroy!
-  		flash[:success] = "Deleted #{@short_url.long_url}!"
+  	@short_url = ShortUrl.find(params[:id])
+  	if @short_url.destroy
+  		flash[:success] = "Deleted #{@short_url.long_url}"
   	end
   	redirect_to root_url
   end
