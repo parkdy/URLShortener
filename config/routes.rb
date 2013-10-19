@@ -1,4 +1,7 @@
 URLShortener::Application.routes.draw do
+  resources :short_urls, only: [:new, :create, :show, :index, :destroy]
+  root to: "short_urls#index" # Set root to show all shortened URLs
+  get "/:id", to: "short_urls#show" # Short URL redirects to long URL
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
