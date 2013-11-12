@@ -1,8 +1,18 @@
-<h1>Shorten a new URL</h1>
+<h1>Shorten a New URL</h1>
 
 <%= form_for @short_url do |f| %>
-	<%= f.label :long_url, "URL" %>
-	<%= f.text_field :long_url %>
+	<% if @short_url.errors.any? %>
+		<ul>
+			<% @short_url.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+			<% end %>
+		</ul>
+	<% end %>
 
-	<%= f.submit "Shorten" %>
+	<p>
+		<%= f.label :long_url, "URL" %>
+		<%= f.text_field :long_url, value: "http://", size: 50  %>
+	</p>
+
+	<p><%= f.submit "Shorten" %></p>
 <% end %>

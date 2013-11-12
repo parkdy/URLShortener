@@ -13,4 +13,9 @@ describe ShortUrl do
 		before { short_url.long_url = "http://www.google.com" }
 		it { should be_valid }
 	end
+
+	describe "without scheme" do
+		before { short_url.long_url = "www.google.com" }
+		it { should_not be_valid }
+	end
 end
