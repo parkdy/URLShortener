@@ -1,8 +1,10 @@
 <h1>Shortened URLs</h1>
 
-<%= button_to new_short_url_path, method: :get do %>
-	Shorten a new URL
-<% end %>
+<p>
+	<%= button_to new_short_url_path, method: :get do %>
+		Shorten a new URL
+	<% end %>
+</p>
 
 <table border="1" cellpadding="10">
 	<th></th>
@@ -11,14 +13,14 @@
 	<% if @short_urls.any? %>
 		<% @short_urls.each do |short_url| %>
 			<tr>
-				<% short_url_string = url_string(short_url) %>
-				<% long_url_string = short_url.long_url %>
 				<td>
 					<%= button_to short_url, method: :delete, data: { confirm: "Are you sure?" } do %>
 						delete
 					<% end %>
 				</td>
-				<td><%= link_to short_url_string, short_url_string %></td>
+
+				<% long_url_string = short_url.long_url %>
+				<td><%= link_to url_string(short_url), full_url_string(short_url) %></td>
 				<td><%= link_to long_url_string, long_url_string %></td>
 			</tr>
 		<% end %>
